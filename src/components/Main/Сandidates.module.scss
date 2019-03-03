@@ -1,0 +1,34 @@
+@import '../../variables.scss';
+
+.candidates {
+  background: $grayColor;
+  .list {
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    .item {
+      margin-top: 100px;
+      display: flex;
+      flex-direction: row;
+      transition: .5s;
+      padding: 0 50px;
+
+      &:hover {
+        cursor: pointer;
+        > div {
+          transform: scale(1.2);
+        }
+      }
+
+      > div {
+        transition: .5s;
+      }
+
+      &:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+}

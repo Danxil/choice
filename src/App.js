@@ -1,94 +1,51 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { isMobile } from 'react-device-detect';
-import { renderToStaticMarkup } from 'react-dom/server';
-import classNames from 'classnames';
-import Cookie from 'js-cookie';
 import PropTypes from 'prop-types';
-import { Switch, withRouter, Route } from 'react-router';
-import { branch, compose, lifecycle, pure, renderComponent, withHandlers, withState } from 'recompose';
-import { withLocalize } from 'react-localize-redux';
+import { Switch, withRouter } from 'react-router';
+import { branch, compose, lifecycle, pure, renderComponent } from 'recompose';
 
 import Providers, { history } from './redux/Providers';
 
 import Content from './components/Content';
 import Main from './components/Main';
-import Cabinet from './components/Cabinet';
-import Footer from './components/Footer';
+import Candidate from './components/Candidate';
 import withUser from './containers/withUser';
-import withTariffs from './containers/withTariffs';
 import withBusinessConfig from './containers/withBusinessConfig';
-import localization from './localization';
 import Spinner from './components/common/Spinner';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 import NotAuthenticatedRoute from './components/common/NotAuthenticatedRoute';
 import AdminStatistic from './components/AdminStatistic';
-import PaymentSuccess from './components/PaymentSuccess';
-import PaymentFail from './components/PaymentFail';
+import Menu from './components/Menu';
+import Login from './components/Login';
 
-import styles from './App.module.scss';
-
-const AppComp = ({
-  collapsedSideMenu,
-  userInfo,
-}) => {
+const AppComp = () => {
   return (
     <Layout className="layout">
-      <div
-        className={classNames(
-          styles.content, {
-            [styles.collapsedMode]: isMobile ? collapsedSideMenu : false,
-            [styles.notAuthenticated]: !userInfo,
-          }
-        )}
-      >
-        <Content>
-          <Switch>
-            <NotAuthenticatedRoute exact path="/:showModal(sign\-in|sign\-up)?" component={Main} />
-            <AuthenticatedRoute path="/cabinet" component={Cabinet} />
-            <AuthenticatedRoute path="/admin-statistic" component={AdminStatistic} />
-            <Route path="/payment-success" component={PaymentSuccess} />
-            <Route path="/payment-fail" component={PaymentFail} />
-          </Switch>
-        </Content>
-        <Footer />
-      </div>
+      <Menu />
+      <Login />
+      <Content>
+        <Switch>
+          <NotAuthenticatedRoute exact path="/:activePage(candidates|about)?/" component={Main} />
+          <AuthenticatedRoute path="/admin-statistic/" component={AdminStatistic} />
+          <NotAuthenticatedRoute exact path="/candidates/:candidateId([0-9]*)/" component={Candidate} />
+        </Switch>
+      </Content>
     </Layout>
   );
 };
 
 const App = compose(
   withRouter,
-  withLocalize,
   withUser(),
   withBusinessConfig(),
-  withTariffs(),
   lifecycle({
     componentDidMount() {
-      let browserLanguage = (navigator.language || navigator.userLanguage).split('-')[0];
-      if (browserLanguage !== 'ru') browserLanguage = 'gb';
       this.props.getUserInfo();
       this.props.getBusinessConfig();
-      this.props.getTariffs();
-      this.props.initialize({
-        languages: [
-          { label: 'EN', code: 'gb' },
-          { label: 'RU', code: 'ru' },
-        ],
-        translation: localization,
-        options: { renderToStaticMarkup, renderInnerHtml: true },
-      });
-      this.props.setActiveLanguage(Cookie.get('language') || browserLanguage);
-    }
-  }),
-  withState('collapsedSideMenu', 'setCollapsedSideMenu', true),
-  withHandlers({
-    setCollapsedSideMenuFn: ({ setCollapsedSideMenu, collapsedSideMenu }) => (val) => {
-      return setCollapsedSideMenu(typeof(val) === 'boolean' ? val : !collapsedSideMenu);
     }
   }),
   branch(
-    ({ userInfoRequestDone, tariffs, businessConfig }) => !userInfoRequestDone || !tariffs.length || !businessConfig,
+    ({ userInfoRequestDone, businessConfig }) => !userInfoRequestDone || !businessConfig,
     renderComponent(() => <Spinner overlay={true} transparentOverlay={true} />),
   ),
   pure,
@@ -99,14 +56,7 @@ AppComp.defaultProps = {
 };
 
 AppComp.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   userInfo: PropTypes.object,
-  collapsedSideMenu: PropTypes.bool.isRequired,
-  setCollapsedSideMenu: PropTypes.func.isRequired,
-  setCollapsedSideMenuFn: PropTypes.func.isRequired,
-  initialize: PropTypes.func.isRequired,
-  getTariffs: PropTypes.func.isRequired,
 };
 
 export default () => {

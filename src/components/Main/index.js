@@ -1,27 +1,36 @@
 import React from 'react';
-import { compose, pure } from 'recompose';
+import { compose, pure, lifecycle } from 'recompose';
+import $ from 'jquery';
 import Top from './Top';
-import Description from './Description';
-import Achievements from './Achievements';
-import Tariffs from './Tariffs';
-import Partners from './Partners';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import Сandidates from './Сandidates';
 
 const Main = () => {
   return (
     <div>
       <Top />
-      <Description />
-      <Achievements />
-      <Tariffs />
-      <Partners />
-      <SignIn />
-      <SignUp />
+      <Сandidates />
     </div>
   );
 }
 
 export default compose(
+  lifecycle({
+    componentDidMount() {
+      const { match: { params: { activePage } } } = this.props;
+      if (activePage) {
+        $('html, body').animate({
+          scrollTop: $(`#${activePage}`).offset().top - 50,
+        }, 1000);
+      }
+    },
+    componentDidUpdate() {
+      const { match: { params: { activePage } } } = this.props;
+      if (activePage) {
+        $('html, body').animate({
+          scrollTop: $(`#${activePage}`).offset().top - 50,
+        }, 1000);
+      }
+    }
+  }),
   pure,
 )(Main);

@@ -5,7 +5,6 @@ import { withLocalize } from 'react-localize-redux';
 import Container from '../common/Container';
 import PageTitle from '../common/PageTitle';
 import withAdminStatistic from '../../containers/withAdminStatistic';
-import Withdraws from '../common/Withdraws';
 import StatisticField from './StatisticField';
 
 const AdminStatistic = ({ translate, adminStatistic }) => {
@@ -14,7 +13,6 @@ const AdminStatistic = ({ translate, adminStatistic }) => {
       <PageTitle>{translate('ADMIN_STATISTIC')}</PageTitle>
       <div>
         <h2>WITHDRAWS</h2>
-        <Withdraws maxItems={9999999} />
         {
           adminStatistic.fields.map(o => (<StatisticField key={`field-${o.label}`} field={o} />))
         }

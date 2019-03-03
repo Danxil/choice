@@ -8,93 +8,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
 }
-
 * {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
   -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
   outline: none !important;
 }
-
-iframe {
-  border: 0;
-}
-
-.list-enter {
-  opacity: 0.01;
-}
-
-.list-enter.list-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.list-leave {
-  opacity: 1;
-}
-
-.list-leave.list-leave-active {
-  opacity: 0.01;
-  transition: opacity 500ms ease-in;
-}
-
-.ant-notification, .ant-message {
-  top: 100px !important;
-}
-.ant-tooltip-inner {
-  word-break: break-word;
-}
-.ant-layout {
-  background: transparent;
-}
-.ant-card {
-  background: #fcfcfc;
-  border: 0;
-}
-.ant-card-head {
-  background: #f2f0f0;
-  border: 0;
-}
 .ghostBtn {
   background: transparent;
-  color: #1890ff;
+  color: $blueColor;
   transition: color 0s;
   text-shadow: none;
-  color: white;
-  border-color: white;
+  border-color: $blueColor;
   border-width: 2px;
 }
 .ghostBtn:hover {
   color: white;
-}
-.ant-slider-handle {
-  width: 30px;
-  height: 30px;
-  margin-top: -13px;
-  margin-left: -14px;
-  border-width: 5px;
-}
-.ant-modal-header, .ant-modal-footer {
-  background: transparent;
-  border-color: #484848;
-}
-.ant-modal-content {
-  border-radius: 0;
-  background: #3a3a3a;
-}
-.ant-modal-title, .ant-modal-content, .ant-modal-content .ant-form {
-  color: white;
-}
-.ant-modal-title {
-  font-weight: bold;
-}
-.ant-input {
-  border-radius: 0;
-}
-.ant-layout-sider, .ant-menu {
-  background: #171717;
-}
-.ant-layout-sider-trigger {
-  position: absolute;
-  background: black;
-  bottom: 0;
 }

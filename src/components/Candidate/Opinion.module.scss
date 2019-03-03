@@ -1,0 +1,51 @@
+@import '../../variables.scss';
+
+.opinion {
+  text-align: left;
+  background: $grayColor;
+  padding-bottom: 50px;
+  &:nth-child(even) {
+    background: white;
+    text-align: right;
+    .like {
+      left: 0;
+      right: auto;
+    }
+  }
+  .content {
+    position: relative;
+  }
+  .profession {
+    font-size: 25px;
+    margin-bottom: 5px;
+  }
+  .like {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    font-size: 30px;
+  }
+  .counter {
+    vertical-align: -3px;
+    i {
+      cursor: pointer;
+    }
+  }
+  .prosConsBlock {
+    margin-top: 20px;
+  }
+  .pros {
+    margin-top: 50px;
+    color: $greenColor;
+  }
+  .cons {
+    color: $redColor;
+  }
+  .overall {
+    margin-top: 50px;
+
+    .overallTitle {
+      font-size: 20px;
+    }
+  }
+}

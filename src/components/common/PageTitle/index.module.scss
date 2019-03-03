@@ -1,0 +1,22 @@
+@import '../../../variables.scss';
+
+.pageTitle {
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  font-weight: bold;
+  color: $blackColor;
+  display: block;
+  &:after {
+    content: ' ';
+    border-top: 2px solid $blackColor;
+    width: 100px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 25px;
+    margin-left: -50px;
+  }
+}

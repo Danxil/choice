@@ -4,18 +4,15 @@ import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
 import logger from 'redux-logger'
 import { fork, takeLatest } from 'redux-saga/effects';
-import { localizeReducer } from 'react-localize-redux';
 import { combineReducers } from 'redux';
 
 import userSaga from './user/saga';
-import withdrawsSaga from './withdraws/saga';
 import user from './user';
 import spinners from './spinners';
-import tariffs from './tariffs';
-import withdraws from './withdraws';
 import businessConfig from './businessConfig';
 import adminStatistic from './adminStatistic';
-import investments from './investments';
+import candidates from './candidates';
+import opinions from './opinions';
 import { setSpinnerStatus } from './spinners/actions';
 import restApiInjector from './middlewares/restApiInjector';
 import spinnerMiddleware from './middlewares/spinnerMiddleware';
@@ -25,17 +22,14 @@ export default ({ history }) => {
     router: connectRouter(history),
     spinners,
     user,
-    tariffs,
-    withdraws,
     businessConfig,
-    investments,
+    candidates,
+    opinions,
     adminStatistic,
-    localize: localizeReducer,
   });
 
   const rootSaga = function* () {
     yield fork(userSaga);
-    yield fork(withdrawsSaga);
     yield fork(function* () {
       yield takeLatest(
         ({ type }) => {

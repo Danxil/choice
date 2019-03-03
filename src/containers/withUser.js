@@ -4,8 +4,6 @@ import {
   logout,
   signIn,
   signUp,
-  confirmWelcome,
-  getReferrals,
 } from '../redux/user/actions';
 
 export default () => connect(
@@ -31,12 +29,6 @@ export default () => connect(
       },
       signUp(values) {
         return dispatch(signUp(values));
-      },
-      confirmWelcome() {
-        return dispatch(confirmWelcome());
-      },
-      getReferrals() {
-        return dispatch(getReferrals());
       },
     };
   }

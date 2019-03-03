@@ -1,0 +1,15 @@
+@import '../../variables.scss';
+
+.candidate {
+  .candidateInfo {
+    text-align: center;
+  }
+  .age {
+    margin-top: 20px;
+    font-size: 25px;
+  }
+  .description {
+    font-size: 25px;
+    margin-top: 10px;
+  }
+}

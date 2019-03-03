@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, pure } from 'recompose';
-import styles from './PageTitle.module.scss';
+import styles from './index.module.scss';
 
 const PageTitle = ({
   children,
