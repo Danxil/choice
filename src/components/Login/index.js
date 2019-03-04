@@ -22,7 +22,7 @@ export default compose(
       const { history, userInfo } = this.props;
       const showModal = new URLSearchParams(location.search).get('showModal');
       if (userInfo && (showModal === 'sign-up' || showModal === 'sign-in')) {
-        history.push('./?')
+        history.push('./?');
       }
     },
   }),

@@ -9,6 +9,7 @@ import PageTitle from '../common/PageTitle';
 import Container from '../common/Container';
 import styles from './index.module.scss';
 import Opinions from './Opinions';
+import AddOpinionModal from '../AddOpinionModal';
 
 const Candidate = ({ candidate }) => {
   return (
@@ -22,6 +23,7 @@ const Candidate = ({ candidate }) => {
         </div>
       </Container>
       <Opinions />
+      <AddOpinionModal />
     </div>
   );
 };

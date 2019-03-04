@@ -15,6 +15,25 @@ export const getOpinions = ({ candidateId }) => {
     }
   };
 };
+export const addOpinion = ({ candidateId, values, cb }) => {
+  return {
+    [RSAA]: {
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/candidates/${candidateId}/opinions`,
+      credentials: 'include',
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: { 'Content-Type': 'application/json' },
+      types: [
+        'ADD_OPINION_REQUEST',
+        {
+          type: 'ADD_OPINION_SUCCESS',
+          meta: { candidateId, cb }
+        },
+        'ADD_OPINION_FAILURE'
+      ]
+    }
+  };
+};
 export const vote = ({ opinionId, userId, candidateId }) => {
   return {
     [RSAA]: {
