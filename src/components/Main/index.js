@@ -14,12 +14,12 @@ const Main = () => {
 }
 
 export default compose(
-  lifecycle({
+    lifecycle({
     componentDidMount() {
       const { match: { params: { activePage } } } = this.props;
       if (activePage) {
         $('html, body').animate({
-          scrollTop: $(`#${activePage}`).offset().top - 50,
+          scrollTop: $(`#${activePage}`).offset().top - 80,
         }, 1000);
       }
     },
@@ -27,7 +27,7 @@ export default compose(
       const { match: { params: { activePage } } } = this.props;
       if (activePage) {
         $('html, body').animate({
-          scrollTop: $(`#${activePage}`).offset().top - 50,
+          scrollTop: $(`#${activePage}`).offset().top - 80,
         }, 1000);
       }
     }

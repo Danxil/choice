@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import {
-  getCandidateInfo,
+  getCandidates,
 } from '../redux/candidates/actions';
 
 export default () => connect(
-  ({ candidate }) => {
+  ({ candidates: { list } }) => {
     return {
-      candidate,
+      candidates: list,
     };
   }, (dispatch) => ({
-    getCandidateInfo({ id }) {
-      return dispatch(getCandidateInfo({ id }));
+    getCandidates() {
+      return dispatch(getCandidates());
     }
   }),
 );

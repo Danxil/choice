@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, pure, lifecycle } from 'recompose';
+import { compose, pure, lifecycle, withProps } from 'recompose';
 import { Avatar } from 'antd';
 import withUser from '../../containers/withUser';
 import withCandidates from '../../containers/withCandidates';
@@ -10,15 +10,15 @@ import Container from '../common/Container';
 import styles from './index.module.scss';
 import Opinions from './Opinions';
 
-const Candidate = () => {
+const Candidate = ({ candidate }) => {
   return (
     <div className={styles.candidate}>
       <Container>
-        <PageTitle>Вася Васин</PageTitle>
+        <PageTitle>{candidate.name}</PageTitle>
         <div className={styles.candidateInfo}>
           <Avatar size={200} />
-          <div className={styles.age}>Вік: 77</div>
-          <div className={styles.description}>Олигарх, бизнесмен, политик</div>
+          <div className={styles.age}>Вік: {candidate.age}</div>
+          <div className={styles.description}>{candidate.description}</div>
         </div>
       </Container>
       <Opinions />
@@ -30,6 +30,9 @@ export default compose(
   withUser(),
   withCandidates(),
   withOpinions(),
+  withProps(({ candidates, match: { params: { candidateId } } }) => ({
+    candidate: candidates.find(({ id }) => id === parseInt(candidateId))
+  })),
   lifecycle({
     componentDidMount() {
       document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -43,4 +46,5 @@ Candidate.defaultProps = {
 };
 Candidate.propTypes = {
   userInfo: PropTypes.object,
+  candidate: PropTypes.object.isRequired,
 };

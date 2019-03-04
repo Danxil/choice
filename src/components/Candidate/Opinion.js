@@ -1,34 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, pure } from 'recompose';
+import { compose, pure, withProps, withHandlers } from 'recompose';
 import classNames from 'classnames';
 import { withRouter } from 'react-router';
+import withOpinions from '../../containers/withOpinions';
 import withUser from '../../containers/withUser';
 import Container from '../common/Container';
 import styles from './Opinion.module.scss';
 
-const Opinion = () => {
+const Opinion = ({
+  opinion: {
+    user,
+    opinionItems,
+    overallText,
+    votes
+  },
+  voted,
+  voteHandler
+}) => {
   return (
     <div className={styles.opinion}>
       <Container>
         <div className={styles.content}>
-          <div className={styles.profession}>Программист</div>
-          <div className={styles.like}>
-            <i className={classNames('fa-thumbs-up', 'far')} /> <small className={styles.counter}>3423</small>
+          <div className={styles.profession}>{user.profession.name}</div>
+          <div onClick={voteHandler} className={classNames(styles.like, { [styles.voted]: voted })}>
+            <i className={classNames('fa-thumbs-up', { 'far': !voted }, { 'fas': voted })} /> <small className={styles.counter}>{votes.length ? votes.length : ''}</small>
           </div>
-          <div className={styles.userMeta}>27 років, вища освіта, м. Киев</div>
+          <div className={styles.userMeta}>{user.age} років, <span className={styles.educationName}>{user.education.name}</span> освіта, м. {user.location.name}</div>
           <div className={classNames(styles.prosConsBlock, styles.pros)}>
-            <div className={styles.item}>+ Плюс кандидата номер, одни кандидата номер, одни</div>
-            <div className={styles.item}>+ Плюс кандидата номер, одни кандидата номер, одни, кандидата номер, одни</div>
-            <div className={styles.item}>+ Плюс кандидата номер, одни кандидата номер</div>
+            {
+              opinionItems.filter(i => i.type).map(opinion => (
+                <div key={`opinion-${opinion.id}`} className={styles.item}>+ {opinion.text}</div>
+              ))
+            }
           </div>
           <div className={classNames(styles.prosConsBlock, styles.cons)}>
-            <div className={styles.item}>- Плюс кандидата номер, одни кандидата номер, одни</div>
-            <div className={styles.item}>- Плюс кандидата номер, одни кандидата номер, одни, кандидата номер, одни</div>
+            {
+              opinionItems.filter(i => !i.type).map(opinion => (
+                <div key={`opinion-${opinion.id}`} className={styles.item}>- {opinion.text}</div>
+              ))
+            }
           </div>
           <div className={styles.overall}>
             <div className={styles.overallTitle}>Загальна думка:</div>
-            Общее впечатление о кандидате общее, впечатление о кандидате. Общее впечатление о кандидате общее, впечатление о кандидате. Общее впечатление о кандидате общее, впечатление о кандидате
+            {overallText}
           </div>
         </div>
       </Container>
@@ -39,12 +54,41 @@ const Opinion = () => {
 export default compose(
   withRouter,
   withUser(),
+  withOpinions(),
+  withProps(({ opinion: { votes }, userInfo: { id: userId } }) => ({
+    voted: !!votes.find(vote => vote.userId === userId)
+  })),
+  withHandlers({
+    voteHandler: ({
+      userInfo: {
+        id: userId
+      },
+      opinion: {
+        id: opinionId
+      },
+      match: {
+        params: { candidateId },
+      },
+      vote,
+      unvote,
+      voted,
+      votingInProcess,
+    }) => () => {
+      if (votingInProcess) return;
+      const fn = voted ? unvote : vote;
+      fn({ opinionId, userId, candidateId });
+    },
+  }),
   pure,
 )(Opinion);
 
 Opinion.defaultProps = {
-  userInfo: null,
 };
 Opinion.propTypes = {
-  userInfo: PropTypes.object,
+  opinion: PropTypes.object.isRequired,
+  vote: PropTypes.func.isRequired,
+  unvote: PropTypes.func.isRequired,
+  voteHandler: PropTypes.func.isRequired,
+  voted: PropTypes.bool.isRequired,
+  votingInProcess: PropTypes.bool.isRequired,
 };

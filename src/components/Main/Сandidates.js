@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withCandidates from '../../containers/withCandidates';
 import withUser from '../../containers/withUser';
 import Container from '../common/Container';
 import PersonItem from '../common/PersonItem';
@@ -8,24 +9,25 @@ import Link from '../common/Link';
 import { compose, pure } from 'recompose';
 import styles from './Сandidates.module.scss';
 
-const Сandidates = () => {
+const Сandidates = ({ candidates }) => {
   return (
     <div className={styles.candidates} id="candidates">
       <Container>
         <PageTitle>Кандидати</PageTitle>
         <div className={styles.list}>
           {
-            [1, 1, 1, 1, 1].map((candidate, index) => (
+            candidates.map((candidate, index) => (
               <Link
                 key={index}
                 className={styles.item}
                 to={{ pathname: `/candidates/${candidate.id}/` }}
               >
                 <PersonItem
-                  name="Петр Порошенко"
+                  id={candidate.id}
+                  name={candidate.name}
                   imageLink="http://google.com"
-                  age={77}
-                  description="Олигарх, бизнесмен, политик"
+                  age={candidate.age}
+                  description={candidate.description}
                 />
               </Link>
             ))
@@ -38,6 +40,7 @@ const Сandidates = () => {
 
 export default compose(
   withUser(),
+  withCandidates(),
   pure,
 )(Сandidates);
 
@@ -46,4 +49,5 @@ export default compose(
 };
 Сandidates.propTypes = {
   userInfo: PropTypes.object,
+  candidates: PropTypes.array.isRequired,
 };

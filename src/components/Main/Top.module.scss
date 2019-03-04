@@ -1,6 +1,7 @@
 @import '../../variables.scss';
 
 .top > div {
+  padding-top: 80px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -16,7 +17,7 @@
     width: 100%;
     font-size: 120px;
     color: $blueColor;
-    
+
     span {
       position: relative;
     }

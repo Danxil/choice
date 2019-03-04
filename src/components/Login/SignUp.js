@@ -16,6 +16,7 @@ const SignUp = ({
   handleSubmit,
   showModal,
   history,
+  validateLink,
 }) => {
   return (
     <Modal
@@ -64,6 +65,23 @@ const SignUp = ({
             <Input prefix={<Icon type="lock" />} type="password" placeholder="Повторіть пароль" />
           )}
         </FormItem>
+        <FormItem>
+          {getFieldDecorator('socialLink', {
+            rules: [
+              { required: true, message: 'Будь ласка, введіть посилання на ваш профіль у будь-який соц. мережі' },
+              {
+                validator: validateLink,
+              }
+            ],
+          })(
+            <Input prefix={<Icon type='mail' />} placeholder="Посилання на ваш профіль у будь-який соц. мережі (facebook, instagram...)" />
+          )}
+        </FormItem>
+        <ul className={styles.vereficationMessage}>
+          <li>Для захисту від спаму потрібно пройти верефікацію.</li>
+          <li>Для цього введіть посилання на ваш профіль в будь-який соц. мережі (facebook, instagram...)</li>
+          <li>Профіль повинен містити контент завантаженість не менше 3-х місяців тому</li>
+        </ul>
         <div className={styles.linksBlock}>
           <Link to={{ pathname: './', search: '?showModal=sign-in' }}>Войти</Link> через існуючого користувача
         </div>
@@ -87,13 +105,20 @@ export default compose(
           callback();
         }
       },
+      validateLink: (rule, value, callback) => {
+        if (value && !value.match(new RegExp(/(https?:\/\/[^\s]+\.[^\s]+)/g))) {
+          callback('Введіть валідне посилання. (Приклад https://www.facebook.com/somelogin)');
+        } else {
+          callback();
+        }
+      },
     });
   }),
   withHandlers({
-    handleSubmit: ({ query, signUp, form: { validateFields } }) => () => {
+    handleSubmit: ({ signUp, form: { validateFields } }) => () => {
       validateFields((err, values) => {
         if (!err) {
-          signUp({ ...values, invitedById: query.get('invitedById') || null });
+          signUp({ ...values });
         }
       });
     }
@@ -109,6 +134,7 @@ SignUp.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
   compareToFirstPassword: PropTypes.func.isRequired,
+  validateLink: PropTypes.func.isRequired,
   form: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   showModal: PropTypes.string,

@@ -20,12 +20,11 @@ export default compose(
 )(PersonItem);
 
 PersonItem.defaultProps = {
-  className: '',
 };
 PersonItem.propTypes = {
-  className: PropTypes.string,
   name: PropTypes.string.isRequired,
   imageLink: PropTypes.string.isRequired,
   age: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

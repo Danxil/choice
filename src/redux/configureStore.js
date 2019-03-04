@@ -7,6 +7,8 @@ import { fork, takeLatest } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 
 import userSaga from './user/saga';
+import opinionsSaga from './opinions/saga';
+
 import user from './user';
 import spinners from './spinners';
 import businessConfig from './businessConfig';
@@ -29,6 +31,7 @@ export default ({ history }) => {
   });
 
   const rootSaga = function* () {
+    yield fork(opinionsSaga);
     yield fork(userSaga);
     yield fork(function* () {
       yield takeLatest(

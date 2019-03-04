@@ -1,7 +1,6 @@
 import { notification } from 'antd';
 import { getUserInfo } from './actions';
 import { Fragment } from 'react';
-import { Translate } from 'react-localize-redux';
 import Providers from '../Providers';
 import React from 'react';
 import { put, takeLatest } from 'redux-saga/effects';
@@ -15,7 +14,7 @@ export default function* () {
       duration: 5,
       description: <Providers>
         <Fragment>
-          <Translate id={ action.payload.status === 401 ? 'EMAIL_OR_PASSWORD_IS_INCORRECT' : 'SERVER_ERROR'} />
+          { action.payload.status === 401 ? 'Неправильний email або пароль' : 'Помилка на сервері. Спробуй пізніше' }
         </Fragment>
       </Providers>
     });
@@ -25,18 +24,29 @@ export default function* () {
       duration: 5,
       description: <Providers>
         <Fragment>
-          <Translate id={ action.payload.status === 400 ? 'THIS_EMAIL_IS_BUSY' : 'SERVER_ERROR'} />
+          { action.payload.status === 400 ? 'Цей емаил зайнятий' : 'Помилка на сервері. Спробуй пізніше' }
         </Fragment>
       </Providers>
     });
   });
-  yield takeLatest(['SIGN_UP_SUCCESS', 'SIGN_IN_SUCCESS'], (action) => {
+  yield takeLatest(['SIGN_UP_SUCCESS'], () => {
     notification.success({
       duration: 5,
       description:
         <Providers>
           <Fragment>
-            <Translate id={action.type} />
+            Реєстрація пройшла успішно. Тепер ви можете публікувати свої думки
+          </Fragment>
+        </Providers>
+    });
+  });
+  yield takeLatest(['SIGN_IN_SUCCESS'], () => {
+    notification.success({
+      duration: 5,
+      description:
+        <Providers>
+          <Fragment>
+            Вы успішно увійшли у свій аккаунт
           </Fragment>
         </Providers>
     });
