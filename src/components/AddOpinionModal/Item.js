@@ -23,6 +23,7 @@ const AddOpinionModal = ({
         keys.map((k, index) => (
           <FormItem
             key={k}
+            required={false}
             label={index === 0 ? labelPlural : ''}
           >
             {getFieldDecorator(`${type}[${k}]`, {

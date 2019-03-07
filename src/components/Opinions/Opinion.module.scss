@@ -7,7 +7,7 @@
   &:nth-child(even) {
     background: white;
     text-align: right;
-    .like {
+    .like, .notVerified {
       left: 0;
       right: auto;
     }
@@ -25,10 +25,17 @@
     top: 5px;
     font-size: 30px;
     cursor: pointer;
-    
+
     &.voted {
       color: $blueColor;
     }
+  }
+  .notVerified {
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    color: $yellowColor;
   }
   .counter {
     vertical-align: -3px;
@@ -58,5 +65,9 @@
     .educationName {
       text-transform: lowercase;
     }
+  }
+  .verifyBtn {
+    margin-top: 10px;
+    width: 100%;
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { compose, pure, lifecycle } from 'recompose';
 import $ from 'jquery';
 import Top from './Top';
@@ -14,7 +15,8 @@ const Main = () => {
 }
 
 export default compose(
-    lifecycle({
+  withRouter,
+  lifecycle({
     componentDidMount() {
       const { match: { params: { activePage } } } = this.props;
       if (activePage) {

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { compose, pure } from 'recompose';
+import { compose, pure, withHandlers } from 'recompose';
 import styles from './index.module.scss';
 import Link from '../common/Link';
 import withUser from '../../containers/withUser';
@@ -22,7 +22,10 @@ const Menu = ({ userInfo, logout }) => (
       ))
     }
     {
-      !userInfo && <div className={styles.item}><Link to={{ pathname: './', search: '?showModal=sign-up' }}>Реестрація</Link></div>
+      !userInfo && (<Fragment>
+        <div className={styles.item}><Link to={{ pathname: './', search: '?showModal=sign-up' }}>Реестрація</Link></div>
+        <div className={styles.item}><Link to={{ pathname: './', search: '?showModal=sign-in' }}>Увійти</Link></div>
+      </Fragment>)
     }
     {
       userInfo && (
@@ -33,7 +36,7 @@ const Menu = ({ userInfo, logout }) => (
               !userInfo.verified ? (
                 <span className={styles.notVerified}>
                   <Tooltip placement="bottom" title="Модератор перевірить ваш профіль у найближчий час">
-                    Ще веріфікований  <i className="fas fa-question-circle" />
+                    Ще не веріфікований  <i className="fas fa-question-circle" />
                   </Tooltip>
                 </span>
               ) : (
@@ -50,6 +53,11 @@ const Menu = ({ userInfo, logout }) => (
 export default compose(
   withRouter,
   withUser(),
+  withHandlers({
+    logout: ({ match: { params: routeParams }, logout: logoutFn }) => () => {
+      logoutFn({ routeParams });
+    }
+  }),
   pure,
 )(Menu);
 Menu.defaultProps = {

@@ -1,6 +1,7 @@
 const initialState = {
   userInfo: null,
   userInfoRequestDone: false,
+  users: [],
 };
 
 const userReducer = (
@@ -16,6 +17,8 @@ const userReducer = (
       return { ...state, userInfo: null };
     case 'USER_UPDATED':
       return { ...state, userInfo: payload };
+    case 'GET_NOT_VERIFIED_USERS_SUCCESS':
+      return { ...state, users: payload };
     default:
       return state;
   }

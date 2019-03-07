@@ -1,16 +1,14 @@
 import { connect } from 'react-redux';
 import {
-  setAppInFocus,
+  getMeta,
 } from '../redux/meta/actions';
 
 export default () => connect(
-  ({ meta: { appInFocus } }) => {
-    return {
-      appInFocus,
-    };
+  ({ meta: { data: meta } }) => {
+    return { meta };
   }, (dispatch) => ({
-    setAppInFocus(val) {
-      return dispatch(setAppInFocus(val));
+    getMeta(val) {
+      return dispatch(getMeta(val));
     }
   }),
 );

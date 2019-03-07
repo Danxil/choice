@@ -8,6 +8,7 @@ import { combineReducers } from 'redux';
 
 import userSaga from './user/saga';
 import opinionsSaga from './opinions/saga';
+import candidatesSaga from './candidates/saga';
 
 import user from './user';
 import spinners from './spinners';
@@ -15,6 +16,7 @@ import businessConfig from './businessConfig';
 import adminStatistic from './adminStatistic';
 import candidates from './candidates';
 import opinions from './opinions';
+import meta from './meta';
 import { setSpinnerStatus } from './spinners/actions';
 import restApiInjector from './middlewares/restApiInjector';
 import spinnerMiddleware from './middlewares/spinnerMiddleware';
@@ -24,6 +26,7 @@ export default ({ history }) => {
     router: connectRouter(history),
     spinners,
     user,
+    meta,
     businessConfig,
     candidates,
     opinions,
@@ -33,6 +36,7 @@ export default ({ history }) => {
   const rootSaga = function* () {
     yield fork(opinionsSaga);
     yield fork(userSaga);
+    yield fork(candidatesSaga);
     yield fork(function* () {
       yield takeLatest(
         ({ type }) => {

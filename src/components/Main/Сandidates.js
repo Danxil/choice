@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import withCandidates from '../../containers/withCandidates';
 import withUser from '../../containers/withUser';
 import Container from '../common/Container';
@@ -39,6 +40,7 @@ const Сandidates = ({ candidates }) => {
 };
 
 export default compose(
+  withRouter,
   withUser(),
   withCandidates(),
   pure,

@@ -60,6 +60,7 @@ const AddOpinionModal = ({
         />
         <FormItem
           label="Загальна думка"
+          required={false}
         >
           {form.getFieldDecorator('overallText', {
             rules: [

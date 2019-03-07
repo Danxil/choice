@@ -71,7 +71,7 @@ export default compose(
     handleSubmit: ({ signIn, form: { validateFields } }) => () => {
       validateFields((err, values) => {
         if (!err) {
-          signIn(values);
+          signIn({ values });
         }
       });
     }

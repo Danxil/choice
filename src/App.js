@@ -12,6 +12,7 @@ import Candidate from './components/Candidate';
 import withUser from './containers/withUser';
 import withBusinessConfig from './containers/withBusinessConfig';
 import withCandidates from './containers/withCandidates';
+import withMeta from './containers/withMeta';
 import Spinner from './components/common/Spinner';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 import AdminStatistic from './components/AdminStatistic';
@@ -37,6 +38,7 @@ const AppComp = () => {
 const App = compose(
   withRouter,
   withUser(),
+  withMeta(),
   withBusinessConfig(),
   withCandidates(),
   lifecycle({
@@ -44,10 +46,16 @@ const App = compose(
       this.props.getUserInfo();
       this.props.getBusinessConfig();
       this.props.getCandidates();
+      this.props.getMeta();
     }
   }),
   branch(
-    ({ userInfoRequestDone, businessConfig, candidates }) => !userInfoRequestDone || !businessConfig || !candidates,
+    ({
+      userInfoRequestDone,
+      businessConfig,
+      candidates,
+      meta,
+    }) => !userInfoRequestDone || !businessConfig || !candidates || !meta,
     renderComponent(() => <Spinner overlay={true} transparentOverlay={true} />),
   ),
   pure,

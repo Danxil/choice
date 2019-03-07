@@ -4,6 +4,9 @@ import {
   logout,
   signIn,
   signUp,
+  verifyUser,
+  deleteUser,
+  getNotVerifiedUsers,
 } from '../redux/user/actions';
 
 export default () => connect(
@@ -24,11 +27,20 @@ export default () => connect(
       logout() {
         return dispatch(logout());
       },
-      signIn(values) {
-        return dispatch(signIn(values));
+      signIn({ values }) {
+        return dispatch(signIn({ values }));
       },
-      signUp(values) {
-        return dispatch(signUp(values));
+      signUp({ values }) {
+        return dispatch(signUp({ values }));
+      },
+      verifyUser({ userId }) {
+        return dispatch(verifyUser({ userId }));
+      },
+      deleteUser({ userId }) {
+        return dispatch(deleteUser({ userId }));
+      },
+      getNotVerifiedUsers() {
+        return dispatch(getNotVerifiedUsers());
       },
     };
   }

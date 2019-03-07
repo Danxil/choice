@@ -19,7 +19,7 @@ const Top = () => {
         <div className={classNames(styles.slogan, styles.slogan2)}>
           <span>Обгрунтуй свою позицію<br/>анонімно</span>
         </div>
-        <div className={styles.downLink}>
+        <div className="downLink">
           <Link to={{ pathname: '/candidates/' }}>
             <Icon type="down-circle" />
           </Link>

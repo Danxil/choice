@@ -15,3 +15,6 @@ export const getCandidates = () => {
     }
   };
 };
+export const setActiveCandidateId = (activeCandidateId) => {
+  return { type: 'SET_ACTIVE_CANDIDATE_ID', payload: activeCandidateId };
+};

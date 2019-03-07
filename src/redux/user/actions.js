@@ -14,7 +14,7 @@ export const getUserInfo = () => ({
   }
 });
 
-export const signIn = (values) => ({
+export const signIn = ({ values }) => ({
   [RSAA]: {
     endpoint: `${process.env.REACT_APP_BASE_REST_URL}/auth/local`,
     method: 'POST',
@@ -23,13 +23,12 @@ export const signIn = (values) => ({
     body: JSON.stringify(values),
     types: [
       { type: 'SIGN_IN_REQUEST', meta: { spinnerKeys: { LOGIN: true } } },
-      'SIGN_IN_SUCCESS',
+      { type: 'SIGN_IN_SUCCESS', meta: { spinnerKeys: { LOGIN: true } } },
       { type: 'SIGN_IN_FAILURE', meta: { spinnerKeys: { LOGIN: false } } },
     ]
   }
 });
-
-export const signUp = (values) => ({
+export const signUp = ({ values }) => ({
   [RSAA]: {
     endpoint: `${process.env.REACT_APP_BASE_REST_URL}/sign-up`,
     method: 'POST',
@@ -38,12 +37,11 @@ export const signUp = (values) => ({
     body: JSON.stringify(values),
     types: [
       { type: 'SIGN_UP_REQUEST', meta: { spinnerKeys: { LOGIN: true } } },
-      'SIGN_UP_SUCCESS',
+      { type: 'SIGN_UP_SUCCESS', meta: { spinnerKeys: { LOGIN: false } } },
       { type: 'SIGN_UP_FAILURE', meta: { spinnerKeys: { LOGIN: false } } },
     ]
   }
 });
-
 export const logout = () => ({
   [RSAA]: {
     endpoint: `${process.env.REACT_APP_BASE_REST_URL}/logout`,
@@ -52,7 +50,52 @@ export const logout = () => ({
     types: [
       'LOGOUT_REQUEST',
       'LOGOUT_SUCCESS',
-      'LOGOUT_FAILURE'
+      'LOGOUT_FAILURE',
     ]
   }
 });
+export const verifyUser = ({ userId }) => {
+  return {
+    [RSAA]: {
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/opinions/${userId}/verify`,
+      credentials: 'include',
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      types: [
+        'VERIFY_USER_REQUEST',
+        'VERIFY_USER_SUCCESS',
+        'VERIFY_USER_FAILURE'
+      ]
+    }
+  };
+};
+export const deleteUser = ({ userId }) => {
+  return {
+    [RSAA]: {
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/opinions/${userId}`,
+      credentials: 'include',
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      types: [
+        'DELETE_USER_REQUEST',
+        'DELETE_USER_SUCCESS',
+        'DELETE_USER_FAILURE'
+      ]
+    }
+  };
+};
+export const getNotVerifiedUsers = () => {
+  return {
+    [RSAA]: {
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/users`,
+      credentials: 'include',
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      types: [
+        'GET_NOT_VERIFIED_USERS_REQUEST',
+        'GET_NOT_VERIFIED_USERS_SUCCESS',
+        'GET_NOT_VERIFIED_USERS_FAILURE'
+      ]
+    }
+  };
+};
