@@ -2,11 +2,15 @@
 
 .candidates {
   background: $grayColor;
+
   .list {
     padding-top: 50px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    @media(max-width: $deviceWidth) {
+      display: block;
+    }
 
     .item {
       margin-top: 100px;
@@ -14,6 +18,14 @@
       flex-direction: row;
       transition: .5s;
       padding: 0 50px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+      @media(max-width: $deviceWidth) {
+        display: block;
+        padding: 0;
+      }
 
       &:hover {
         cursor: pointer;

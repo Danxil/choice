@@ -1,6 +1,10 @@
 @import '../../variables.scss';
 
 .candidate {
+  padding-bottom: 50px ;
+  & > div:first-child {
+    padding-top: 80px;
+  }
   .candidateInfo {
     text-align: center;
   }
@@ -32,6 +36,19 @@
   }
   .btn {
     text-align: center;
-    margin-bottom: 50px;
+  }
+  .avatar {
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    img {
+      object-fit: cover;
+    }
+
+    @media(max-width: $deviceWidth) {
+      width: 150px;
+      height: 150px;
+      line-height: 100px;
+    }
   }
 }

@@ -152,7 +152,7 @@ const SignUp = ({
             >
               {
                 meta.locations.map(location => (
-                  <Option key={`location{location.id}`} value={location.id} name={location.name}>{location.name}</Option>
+                  <Option key={`location${location.id}`} value={location.id} name={location.name}>{location.name}</Option>
                 ))
               }
             </Select>

@@ -4,9 +4,11 @@ import { compose, pure } from 'recompose';
 import { Avatar } from 'antd';
 import styles from './index.module.scss';
 
-const PersonItem = ({ imageLink, name, age, description }) => (
+const PersonItem = ({ photoUrl, name, age, description }) => (
   <div className={styles.personItem}>
-    <Avatar size={200} icon={imageLink} />
+    <div>
+      <Avatar className={styles.avatar} src={photoUrl} />
+    </div>
     <div className={styles.textBlock}>
       <h3 className={styles.name}>{name}</h3>
       <p className={styles.age}>Вік: {age}</p>
@@ -23,7 +25,7 @@ PersonItem.defaultProps = {
 };
 PersonItem.propTypes = {
   name: PropTypes.string.isRequired,
-  imageLink: PropTypes.string.isRequired,
+  photoUrl: PropTypes.string.isRequired,
   age: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,

@@ -7,33 +7,34 @@ import Container from '../common/Container';
 import PersonItem from '../common/PersonItem';
 import PageTitle from '../common/PageTitle';
 import Link from '../common/Link';
-import { compose, pure } from 'recompose';
+import { compose, pure, lifecycle } from 'recompose';
 import styles from './Сandidates.module.scss';
+
 
 const Сandidates = ({ candidates }) => {
   return (
     <div className={styles.candidates} id="candidates">
       <Container>
-        <PageTitle>Кандидати</PageTitle>
-        <div className={styles.list}>
-          {
-            candidates.map((candidate, index) => (
-              <Link
-                key={index}
-                className={styles.item}
-                to={{ pathname: `/candidates/${candidate.id}/` }}
-              >
-                <PersonItem
-                  id={candidate.id}
-                  name={candidate.name}
-                  imageLink="http://google.com"
-                  age={candidate.age}
-                  description={candidate.description}
-                />
-              </Link>
-            ))
-          }
-        </div>
+          <PageTitle>Кандидати</PageTitle>
+          <div className={styles.list}>
+            {
+              candidates.map((candidate, index) => (
+                <Link
+                  key={index}
+                  className={styles.item}
+                  to={{ pathname: `/candidates/${candidate.id}/` }}
+                >
+                  <PersonItem
+                    id={candidate.id}
+                    name={candidate.name}
+                    photoUrl={candidate.photoUrl}
+                    age={candidate.age}
+                    description={candidate.description}
+                  />
+                </Link>
+              ))
+            }
+          </div>
       </Container>
     </div>
   );
@@ -43,6 +44,11 @@ export default compose(
   withRouter,
   withUser(),
   withCandidates(),
+  lifecycle({
+    componentDidMount() {
+      this.props.getCandidates();
+    }
+  }),
   pure,
 )(Сandidates);
 

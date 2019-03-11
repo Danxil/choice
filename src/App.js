@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import PropTypes from 'prop-types';
 import { Switch, withRouter, Route } from 'react-router';
-import { branch, compose, lifecycle, pure, renderComponent } from 'recompose';
+import { compose, lifecycle, pure } from 'recompose';
 
 import Providers, { history } from './redux/Providers';
 
@@ -10,10 +10,9 @@ import Content from './components/Content';
 import Main from './components/Main';
 import Candidate from './components/Candidate';
 import withUser from './containers/withUser';
-import withBusinessConfig from './containers/withBusinessConfig';
 import withCandidates from './containers/withCandidates';
+import withBusinessConfig from './containers/withBusinessConfig';
 import withMeta from './containers/withMeta';
-import Spinner from './components/common/Spinner';
 import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 import AdminStatistic from './components/AdminStatistic';
 import Menu from './components/Menu';
@@ -44,20 +43,11 @@ const App = compose(
   lifecycle({
     componentDidMount() {
       this.props.getUserInfo();
-      this.props.getBusinessConfig();
       this.props.getCandidates();
+      this.props.getBusinessConfig();
       this.props.getMeta();
     }
   }),
-  branch(
-    ({
-      userInfoRequestDone,
-      businessConfig,
-      candidates,
-      meta,
-    }) => !userInfoRequestDone || !businessConfig || !candidates || !meta,
-    renderComponent(() => <Spinner overlay={true} transparentOverlay={true} />),
-  ),
   pure,
 )(AppComp);
 

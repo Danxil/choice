@@ -1,24 +1,11 @@
 import { RSAA } from 'redux-api-middleware';
 
-export const getOpinions = ({ candidateId }) => {
+export const getOpinions = ({ candidateId, verified = true }) => {
   return {
     [RSAA]: {
-      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/candidates/${candidateId}/opinions`,
-      credentials: 'include',
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      types: [
-        'GET_OPINIONS_REQUEST',
-        'GET_OPINIONS_SUCCESS',
-        'GET_OPINIONS_FAILURE'
-      ]
-    }
-  };
-};
-export const getNotVerifiedOpinions = () => {
-  return {
-    [RSAA]: {
-      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/opinions?verified=false`,
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}${!candidateId ?
+        `/opinions?verified=${verified}` :
+        `/candidates/${candidateId}/opinions?verified=${verified}`}`,
       credentials: 'include',
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },

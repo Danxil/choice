@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Modal } from 'antd';
-import { compose, pure, withProps, withHandlers, withState } from 'recompose';
+import { compose, pure, withProps, withHandlers, withState, branch, renderNothing } from 'recompose';
 import { withRouter } from 'react-router';
 import withUser from '../../containers/withUser';
 import withOpinions from '../../containers/withOpinions';
@@ -81,6 +81,13 @@ export default compose(
   withUser(),
   withOpinions(),
   withBusinessConfig(),
+  branch(
+    ({
+      userInfo,
+      businessConfig,
+    }) => !userInfo || !businessConfig,
+    renderNothing,
+  ),
   withState('idCons', 'setIdCons', 0),
   withState('idPros', 'setIdPros', 0),
   withProps(() => ({ query: new URLSearchParams(location.search) })),

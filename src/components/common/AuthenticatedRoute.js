@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { Redirect, Route, withRouter } from 'react-router';
 import withUser from '../../containers/withUser';
-import { pure, compose } from 'recompose';
+import { pure, compose, branch, renderNothing } from 'recompose';
 
 const PrivateRoute = ({ component: Component, userInfo, ...rest }) => {
   return (
@@ -28,4 +28,14 @@ PrivateRoute.propTypes = {
   userInfo: PropTypes.object,
 }
 
-export default compose(withRouter, withUser(), pure)(PrivateRoute);
+export default compose(
+  withRouter,
+  withUser(),
+  branch(
+    ({
+      userInfoRequestDone,
+    }) => !userInfoRequestDone,
+    renderNothing,
+  ),
+  pure
+)(PrivateRoute);

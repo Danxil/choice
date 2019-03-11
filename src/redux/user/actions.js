@@ -54,12 +54,13 @@ export const logout = () => ({
     ]
   }
 });
-export const verifyUser = ({ userId }) => {
+export const verifyUser = ({ userId, socialId }) => {
   return {
     [RSAA]: {
-      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/opinions/${userId}/verify`,
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/users/${userId}/verify`,
       credentials: 'include',
       method: 'PUT',
+      body: JSON.stringify({ socialId }),
       headers: { 'Content-Type': 'application/json' },
       types: [
         'VERIFY_USER_REQUEST',
@@ -72,7 +73,7 @@ export const verifyUser = ({ userId }) => {
 export const deleteUser = ({ userId }) => {
   return {
     [RSAA]: {
-      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/opinions/${userId}`,
+      endpoint: `${process.env.REACT_APP_BASE_REST_URL}/users/${userId}`,
       credentials: 'include',
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },

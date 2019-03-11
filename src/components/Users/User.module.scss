@@ -1,0 +1,33 @@
+@import '../../variables.scss';
+
+.user {
+  text-align: left;
+  background: $grayColor;
+  padding-bottom: 50px;
+  &:nth-child(even) {
+    background: white;
+    text-align: right;
+    .notVerified {
+      text-align: right;
+      left: 0;
+      right: auto;
+    }
+    :global(.ant-form-item) {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+  .content {
+    position: relative;
+  }
+  .notVerified {
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    color: $yellowColor;
+  }
+  .socialIdField {
+    max-width: 400px;
+  }
+}

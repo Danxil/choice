@@ -14,10 +14,12 @@ export default () => connect(
     user: {
       userInfo,
       userInfoRequestDone,
+      users,
     }
   }) => ({
     userInfo,
     userInfoRequestDone,
+    users,
   }),
   (dispatch) => {
     return {
@@ -33,8 +35,8 @@ export default () => connect(
       signUp({ values }) {
         return dispatch(signUp({ values }));
       },
-      verifyUser({ userId }) {
-        return dispatch(verifyUser({ userId }));
+      verifyUser({ userId, socialId }) {
+        return dispatch(verifyUser({ userId, socialId }));
       },
       deleteUser({ userId }) {
         return dispatch(deleteUser({ userId }));

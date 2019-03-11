@@ -5,4 +5,15 @@
   .list {
     margin-bottom: 50px;
   }
+  .content {
+    position: relative;
+  }
+  .filterBtn {
+    position: absolute;
+    font-size: 30px;
+    right: 0;
+    top: -55px;
+    color: $blueColor;
+    cursor: pointer;
+  }
 }

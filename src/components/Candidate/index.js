@@ -15,41 +15,35 @@ import styles from './index.module.scss';
 import Opinions from '../Opinions';
 import AddOpinionModal from '../AddOpinionModal';
 
-const Candidate = ({ candidate, userInfo }) => {
+const AddBtn = compose(withUser(), pure)(({ userInfo }) => (
+  <div className={styles.btn}>
+    <Link to={{ pathname: './', search: userInfo ? '?showModal=add-opinion' : '?showModal=sign-up' }}>
+      <Button
+        size="large"
+        type="primary"
+        className={classNames('ghostBtn')}
+      >
+        Додати свою
+      </Button>
+    </Link>
+  </div>
+));
+
+const Candidate = ({ candidate, opinions }) => {
   return (
     <div className={styles.candidate}>
       <Container>
         <PageTitle>{candidate.name}</PageTitle>
         <div className={styles.candidateInfo}>
-          <Avatar size={200} />
+          <Avatar className={styles.avatar} src={candidate.photoUrl} />
           <div className={styles.age}>Вік: {candidate.age}</div>
           <div className={styles.description}>{candidate.description}</div>
         </div>
       </Container>
       <h2 className={styles.title}>Думки людей:</h2>
-      <div className={styles.btn}>
-        <Link to={{ pathname: './', search: userInfo ? '?showModal=add-opinion' : '?showModal=sign-up' }}>
-          <Button
-            size="large"
-            type="primary"
-            className={classNames('ghostBtn')}
-          >
-            Додати свою
-          </Button>
-        </Link>
-      </div>
+      <AddBtn />
       <Opinions />
-      <div className={styles.btn}>
-        <Link to={{ pathname: './', search: userInfo ? '?showModal=add-opinion' : '?showModal=sign-up' }}>
-          <Button
-            size="large"
-            type="primary"
-            className={classNames('ghostBtn')}
-          >
-            Додати свою
-          </Button>
-        </Link>
-      </div>
+      { opinions.length ? (<AddBtn />) : null }
       <AddOpinionModal />
     </div>
   );
@@ -57,7 +51,7 @@ const Candidate = ({ candidate, userInfo }) => {
 
 export default compose(
   withRouter,
-  withUser(),
+  withOpinions(),
   withCandidates(),
   withOpinions(),
   withProps(({ candidates, match: { params: { candidateId } } }) => ({
@@ -87,4 +81,5 @@ Candidate.defaultProps = {
 Candidate.propTypes = {
   userInfo: PropTypes.object,
   candidate: PropTypes.object.isRequired,
+  opinions: PropTypes.array.isRequired,
 };

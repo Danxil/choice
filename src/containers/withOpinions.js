@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import {
   getOpinions,
-  getNotVerifiedOpinions,
   addOpinion,
   vote,
   unvote,
@@ -16,11 +15,8 @@ export default () => connect(
       votingInProcess,
     };
   }, (dispatch) => ({
-    getOpinions({ candidateId }) {
-      return dispatch(getOpinions({ candidateId }));
-    },
-    getNotVerifiedOpinions() {
-      return dispatch(getNotVerifiedOpinions());
+    getOpinions({ candidateId, verified }) {
+      return dispatch(getOpinions({ candidateId, verified }));
     },
     addOpinion({ candidateId, values, cb }) {
       return dispatch(addOpinion({ candidateId, values, cb }));

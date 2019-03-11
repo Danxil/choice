@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, pure, withProps, withHandlers } from 'recompose';
 import classNames from 'classnames';
-import { Button } from 'antd';
 import { withRouter } from 'react-router';
 import { Tooltip } from 'antd';
 import withOpinions from '../../containers/withOpinions';
 import withUser from '../../containers/withUser';
 import Container from '../common/Container';
+import VerifyBtns from '../common/VerifyBtns';
 import styles from './Opinion.module.scss';
 
 const Opinion = ({
@@ -36,28 +36,7 @@ const Opinion = ({
                   Очікує на верифікацію  <i className="fas fa-question-circle" />
                 </Tooltip>
                 {
-                  userInfo && userInfo.isAdmin && (<Fragment>
-                    <div>
-                      <Button
-                        size="large"
-                        type="primary"
-                        className={styles.verifyBtn}
-                        onClick={verifyOpinion}
-                      >
-                        Verify
-                      </Button>
-                    </div>
-                    <div>
-                      <Button
-                        size="large"
-                        type="danger"
-                        className={styles.verifyBtn}
-                        onClick={deleteOpinion}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </Fragment>)
+                  userInfo && userInfo.isAdmin && (<VerifyBtns verify={verifyOpinion} delete={deleteOpinion} />)
                 }
               </div>
             ) : (

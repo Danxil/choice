@@ -2,7 +2,7 @@
 
 .top > div {
   padding-top: 80px;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +11,9 @@
     width: 100%;
     font-size: 120px;
     color: $blueColor;
+    @media(max-width: $deviceWidth) {
+      font-size: 45px;
+    }
 
     span {
       position: relative;
@@ -20,5 +23,13 @@
     width: 100%;
     font-size: 70px;
     text-align: right;
+    @media(max-width: $deviceWidth) {
+      font-size: 30px;
+    }
+  }
+  :global(.downLink) {
+    &.hidden {
+      visibility: hidden;
+    }
   }
 }

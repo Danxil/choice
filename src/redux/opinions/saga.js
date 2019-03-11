@@ -1,4 +1,4 @@
-import { getNotVerifiedOpinions, getOpinions } from './actions';
+import { getOpinions } from './actions';
 import { put, takeEvery, select } from 'redux-saga/effects';
 
 export default function* () {
@@ -14,12 +14,15 @@ export default function* () {
     if (meta && meta.cb) meta.cb();
     const store = yield select();
     const { candidates: { activeCandidateId:  candidateId } } = store;
-    yield put(getOpinions({ candidateId }));
+    if (candidateId) yield put(getOpinions({ candidateId }));
   });
   yield takeEvery([
+    'VERIFY_USER_SUCCESS',
     'VERIFY_OPINION_SUCCESS',
     'DELETE_OPINION_SUCCESS',
   ], function *() {
-    yield put(getNotVerifiedOpinions());
+    const store = yield select();
+    const { candidates: { activeCandidateId:  candidateId } } = store;
+    yield put(getOpinions({ verified: false, candidateId }));
   });
 }

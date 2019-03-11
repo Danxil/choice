@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Redirect, Route } from 'react-router'
+import { Redirect, Route, withRouter } from 'react-router'
 import withUser from '../../containers/withUser';
-import { compose, pure } from 'recompose';
+import { compose, pure, branch, renderNothing } from 'recompose';
 
 const PrivateRoute = ({ component: Component, userInfo, ...rest }) => {
   return (
@@ -28,4 +28,14 @@ PrivateRoute.propTypes = {
   userInfo: PropTypes.object,
 }
 
-export default compose(withUser(), pure)(PrivateRoute);
+export default compose(
+  withRouter,
+  withUser(),
+  branch(
+    ({
+      userInfoRequestDone,
+    }) => !userInfoRequestDone,
+    renderNothing,
+  ),
+  pure
+)(PrivateRoute);

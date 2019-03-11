@@ -4,14 +4,23 @@
   text-align: left;
   background: $grayColor;
   padding-bottom: 50px;
+
   &:nth-child(even) {
     background: white;
-    text-align: right;
-    .like, .notVerified {
-      left: 0;
-      right: auto;
+  }
+
+  @media(min-width: $deviceWidth) {
+    &:nth-child(even) {
+      background: white;
+      text-align: right;
+      .like, .notVerified {
+        left: 0;
+        right: auto;
+      }
     }
   }
+
+
   .content {
     position: relative;
   }
@@ -22,9 +31,13 @@
   .like {
     position: absolute;
     right: 0;
-    top: 5px;
+    top: 0px;
     font-size: 30px;
     cursor: pointer;
+
+    @media(max-width: $deviceWidth) {
+      font-size: 25px;
+    }
 
     &.voted {
       color: $blueColor;
@@ -55,19 +68,17 @@
   }
   .overall {
     margin-top: 50px;
-
     .overallTitle {
       font-size: 20px;
     }
   }
 
   .userMeta {
+    @media(max-width: $deviceWidth) {
+      font-size: 12px;
+    }
     .educationName {
       text-transform: lowercase;
     }
-  }
-  .verifyBtn {
-    margin-top: 10px;
-    width: 100%;
   }
 }

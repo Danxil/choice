@@ -1,5 +1,5 @@
 const initialState = {
-  list: null,
+  list: [],
   activeCandidateId: null,
 };
 

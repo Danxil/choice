@@ -9,7 +9,7 @@ import { Icon } from 'antd';
 import styles from './Top.module.scss';
 import Link from '../common/Link';
 
-const Top = () => {
+const Top = ({ match: { params: { activePage } } }) => {
   return (
     <div className={styles.top}>
       <Container>
@@ -19,7 +19,7 @@ const Top = () => {
         <div className={classNames(styles.slogan, styles.slogan2)}>
           <span>Обгрунтуй свою позицію<br/>анонімно</span>
         </div>
-        <div className="downLink">
+        <div className={classNames('downLink', { [styles.hidden]: activePage === 'candidates' })}>
           <Link to={{ pathname: '/candidates/' }}>
             <Icon type="down-circle" />
           </Link>
@@ -40,4 +40,5 @@ Top.defaultProps = {
 };
 Top.propTypes = {
   userInfo: PropTypes.object,
+  match: PropTypes.object.isRequired,
 };

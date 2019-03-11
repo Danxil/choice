@@ -10,6 +10,7 @@ const Main = () => {
     <div>
       <Top />
       <Сandidates />
+      <div></div>
     </div>
   );
 }
@@ -25,9 +26,10 @@ export default compose(
         }, 1000);
       }
     },
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+      const { match: { params: { activePage: prevActivePage } } } = prevProps;
       const { match: { params: { activePage } } } = this.props;
-      if (activePage) {
+      if (activePage && prevActivePage !== activePage) {
         $('html, body').animate({
           scrollTop: $(`#${activePage}`).offset().top - 80,
         }, 1000);
