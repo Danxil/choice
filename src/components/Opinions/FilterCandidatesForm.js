@@ -33,7 +33,14 @@ const FilterCandidatesForm = ({
             <Option key={`anyProfession`} value={null} name="Будь-яка">Будь-яка</Option>
             {
               professions.map(profession => (
-                <Option key={`profession${profession.id}`} value={profession.id} name={profession.name}>{profession.name}</Option>
+                <Option
+                  key={`profession${profession.id}`}
+                  value={profession.id}
+                  name={profession.name}
+                  title={profession.name}
+                >
+                  {profession.name}
+                </Option>
               ))
             }
           </Select>

@@ -3,8 +3,6 @@ import { put, takeEvery, select } from 'redux-saga/effects';
 
 export default function* () {
   yield takeEvery([
-    'VOTE_SUCCESS',
-    'UNVOTE_SUCCESS',
     'ADD_OPINION_SUCCESS',
     'SIGN_IN_SUCCESS',
     'SIGN_UP_SUCCESS',

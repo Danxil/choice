@@ -45,7 +45,10 @@ export const vote = ({ opinionId, userId }) => {
       headers: { 'Content-Type': 'application/json' },
       types: [
         'VOTE_REQUEST',
-        'VOTE_SUCCESS',
+        {
+          type: 'VOTE_SUCCESS',
+          payload: { opinionId, userId },
+        },
         'VOTE_FAILURE'
       ]
     }
@@ -60,7 +63,10 @@ export const unvote = ({ opinionId, userId }) => {
       headers: { 'Content-Type': 'application/json' },
       types: [
         'UNVOTE_REQUEST',
-        'UNVOTE_SUCCESS',
+        {
+          type: 'UNVOTE_SUCCESS',
+          payload: { opinionId, userId },
+        },
         'UNVOTE_FAILURE'
       ]
     }
